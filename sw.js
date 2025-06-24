@@ -1,30 +1,33 @@
 const CACHE_NAME = 'NextLevelFit-v1';
 var APP_PREFIX = 'diplom_';
 var VERSION = 'version_00';
+var GHPATH = '/Diplom';
 
 const urlsToCache = [
-    '/',
-    'index.html',
-    'style.css',
-    'script.js',
+    '${GHPATH}/',
+    '${GHPATH}/index.html',
+    '${GHPATH}/style.css',
+    '${GHPATH}/script.js',
+    '${GHPATH}/manifest.webmanifest',
+    '${GHPATH}/icon.png',
     'https://fonts.googleapis.com/icon?family=Material+Icons',
-    '/video/rest.webp',
+    '${GHPATH}/video/rest.webp',
     // Workout
-    '/video/jumping_jacks.webp',
-    '/video/high_knees.webp',
-    '/video/burpees.webp',
-    '/video/mountain_climbers.webp',
-    '/video/squat_jumps.webp',
-    '/video/lunges.webp',
-    '/video/butt_kicks.webp',
-    '/video/plank_jacks.webp',
-    '/video/skaters.webp',
-    '/video/box_jumps.webp',
-    '/video/jump_rope.webp',
+    '${GHPATH}/video/jumping_jacks.webp',
+    '${GHPATH}/video/high_knees.webp',
+    '${GHPATH}/video/burpees.webp',
+    '${GHPATH}/video/mountain_climbers.webp',
+    '${GHPATH}/video/squat_jumps.webp',
+    '${GHPATH}/video/lunges.webp',
+    '${GHPATH}/video/butt_kicks.webp',
+    '${GHPATH}/video/plank_jacks.webp',
+    '${GHPATH}/video/skaters.webp',
+    '${GHPATH}/video/box_jumps.webp',
+    '${GHPATH}/video/jump_rope.webp',
     // Warm-up
-    '/video/arm_circles.webp',
-    '/video/leg_swings.webp',
-    '/video/torso_twists.webp',
+    '${GHPATH}/video/arm_circles.webp',
+    '${GHPATH}/video/leg_swings.webp',
+    '${GHPATH}/video/torso_twists.webp',
 ];
 
 self.addEventListener('install', event => {
