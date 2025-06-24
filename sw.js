@@ -1,9 +1,9 @@
 const CACHE_NAME = 'NextLevelFit-v1';
 var APP_PREFIX = 'diplom_';
-var VERSION = 'version_00';
+var VERSION = 'version_01';
 
 const urlsToCache = [
-    '/',
+    './',
     'index.html',
     'style.css',
     'script.js',
