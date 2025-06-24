@@ -1,0 +1,24 @@
+{
+  "name": "NextLevelFit",
+  "short_name": "NLF",
+  "description": "Приложение для фитнесса с элементами геймификации",
+ 
+  "scope": "/Diplom/",
+  "start_url": "/Diplom/",
+ 
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+ 
+  "display": "standalone", 
+ 
+  // The possible icons to display. Make sure to change the src URL,
+  // the type and the size to your needs. If the size isn't correct, 
+  // you may not be able to install the app. 
+  "icons": [
+      {
+        "src": "icon.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+  ]
+}
