@@ -12,31 +12,49 @@
     --font-family: 'Roboto', sans-serif;
 }
 
-body {
-    font-family: var(--font-family);
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
     margin: 0;
+    font-family: var(--font-family);
     background-color: var(--background-color);
     color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden;
+    overflow: hidden; 
+}
+
+#app-container {
+    width: 100%;
+    max-width: 480px; 
+    height: 100%;
+    margin: 0 auto;
+    position: relative; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.15); 
+    overflow: hidden; 
 }
 
 .screen {
     width: 100%;
-    max-width: 480px;
-    height: 100vh;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     display: none;
     flex-direction: column;
     background-color: var(--background-color);
-    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .screen.active {
-    display: flex;
+    display: flex; 
+    z-index: 10;   
+    opacity: 1;
 }
+
+
 
 /* Главный экран и общие стили */
 #main-screen header {
@@ -91,7 +109,7 @@ body {
 .exit-btn .material-icons { font-size: 28px; }
 .session-timer { font-size: 1.2em; }
 #session-type-display { font-weight: bold; color: var(--accent-color); }
-.training-main { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 10px; }
+.training-main { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 10px; overflow-y: auto; } /* Added overflow for small screens */
 .exercise-animation-container { width: 70%; max-width: 280px; height: auto; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
 #current-exercise-animation { width: 100%; height: auto; display: block; }
 #current-exercise-name { font-size: 1.3em; margin-top: 5px; margin-bottom: 10px; color: var(--primary-dark-color); }
@@ -103,7 +121,7 @@ body {
 .pause-btn .material-icons { font-size: 28px; vertical-align: middle; }
 
 /* Модальные окна */
-.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 20; }
 .modal.active { display: flex; }
 .modal-content { background-color: var(--card-background); margin: auto; padding: 25px; border-radius: 12px; width: 85%; max-width: 380px; box-shadow: 0 5px 20px rgba(0,0,0,0.35); text-align: center; position: relative; }
 .close-modal-btn { color: #aaa; position: absolute; top: 10px; right: 15px; font-size: 32px; font-weight: bold; cursor: pointer; line-height: 1; }
@@ -116,25 +134,8 @@ body {
 .theme-option:hover { background-color: var(--primary-color); color: white; }
 
 /* --- ТЕМЫ --- */
-
-/* Темная тема */
-body.dark-theme {
-    --primary-color: #546E7A;       /* Сине-серый 600 */
-    --primary-dark-color: #90A4AE;  /* Сине-серый 300 */
-    --accent-color: #FFAB00;        /* Янтарный A700 */
-    --background-color: #263238;    /* Сине-серый 900 */
-    --text-color: #ECEFF1;          /* Сине-серый 50 */
-    --card-background: #37474F;     /* Сине-серый 800 */
-    --button-text-color: #FFFFFF;
-    --progress-bar-fill-color: #FFAB00;
-    --progress-bar-bg-color: #546E7A;
-}
-
-/* Светло-голубая тема */
+body.dark-theme { --primary-color: #546E7A; --primary-dark-color: #90A4AE; --accent-color: #FFAB00; --background-color: #263238; --text-color: #ECEFF1; --card-background: #37474F; --button-text-color: #FFFFFF; --progress-bar-fill-color: #FFAB00; --progress-bar-bg-color: #546E7A; }
 body.light-blue-theme { --primary-color: #03A9F4; --primary-dark-color: #0288D1; --accent-color: #FFD740; --background-color: #E1F5FE; --text-color: #212121; --card-background: #FFFFFF; --button-text-color: #FFFFFF; --progress-bar-fill-color: #FFD740; --progress-bar-bg-color: #B3E5FC; }
-/* Тема "Восторг индиго" */
 body.indigo-delight-theme { --primary-color: #3F51B5; --primary-dark-color: #303F9F; --accent-color: #FF4081; --background-color: #E8EAF6; --text-color: #212121; --card-background: #FFFFFF; --button-text-color: #FFFFFF; --progress-bar-fill-color: #FF4081; --progress-bar-bg-color: #C5CAE9; }
-/* Тема "Бирюзовая свежесть" */
 body.teal-fresh-theme { --primary-color: #009688; --primary-dark-color: #00796B; --accent-color: #FFC107; --background-color: #E0F2F1; --text-color: #212121; --card-background: #FFFFFF; --button-text-color: #FFFFFF; --progress-bar-fill-color: #FFC107; --progress-bar-bg-color: #B2DFDB; }
-/* Тема "Энергия насыщенного оранжевого" */
 body.deep-orange-energy-theme { --primary-color: #FF5722; --primary-dark-color: #E64A19; --accent-color: #FFC107; --background-color: #FBE9E7; --text-color: #212121; --card-background: #FFFFFF; --button-text-color: #FFFFFF; --progress-bar-fill-color: #FFC107; --progress-bar-bg-color: #FFCCBC; }
