@@ -80,6 +80,42 @@ document.addEventListener('DOMContentLoaded', () => {
     closeSummaryModalBtn.addEventListener('click', () => { sessionSummaryModal.classList.remove('active'); showScreen(mainScreen); });
     window.addEventListener('click', (event) => { if (event.target === customizationMenu) { customizationMenu.classList.remove('active'); } if (event.target === sessionSummaryModal) { sessionSummaryModal.classList.remove('active'); showScreen(mainScreen); } if(event.target === warmupPromptModal) {warmupPromptModal.classList.remove('active');}});
 
+    changePicBtn.addEventListener('click', () => profilePicUpload.click());
+    profilePicUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                userData.profilePicSrc = e.target.result;
+                updateProfileDisplay();
+                saveUserData();
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    editNameBtn.addEventListener('click', () => {
+        userNameDisplay.style.display = 'none';
+        editNameBtn.style.display = 'none';
+        nameInputField.style.display = 'inline-block';
+        nameInputField.value = userData.name;
+        nameInputField.focus();
+    });
+
+    nameInputField.addEventListener('blur', () => {
+        userData.name = nameInputField.value.trim() || "User Name";
+        nameInputField.style.display = 'none';
+        userNameDisplay.style.display = 'inline';
+        editNameBtn.style.display = 'inline-block';
+        updateProfileDisplay();
+        saveUserData();
+    });
+    nameInputField.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            nameInputField.blur();
+        }
+    });
+    
     // --- Логика справки ---
     function populateExerciseGuide() {
         guideContent.innerHTML = '';
