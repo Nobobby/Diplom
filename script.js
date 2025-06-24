@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showScreen(screenToShow) { screens.forEach(screen => screen.classList.remove('active')); screenToShow.classList.add('active'); }
     function updateProfileDisplay() { userNameDisplay.textContent = userData.name; profilePic.src = userData.profilePicSrc; userLevelDisplay.textContent = userData.level; currentExpDisplay.textContent = userData.currentExp; nextLevelExpDisplay.textContent = userData.expToNextLevel; const expPercentage = (userData.currentExp / userData.expToNextLevel) * 100; expBar.style.width = `${expPercentage}%`; }
     function saveUserData() { localStorage.setItem('fitnessAppData', JSON.stringify(userData)); }
-    function loadUserData() { const savedData = localStorage.getItem('fitnessAppData'); if (savedData) { userData = JSON.parse(savedData); } if (!userData.profilePicSrc) { userData.profilePicSrc = 'https://via.placeholder.com/80'; } updateProfileDisplay(); }
+    function loadUserData() { const savedData = localStorage.getItem('fitnessAppData'); if (savedData) { userData = JSON.parse(savedData); } if (!userData.profilePicSrc) { userData.profilePicSrc = 'https://img.itisuniqueofficial.com/80'; } updateProfileDisplay(); }
     function addExp(amount) { userData.currentExp += amount; let leveledUp = false; while (userData.currentExp >= userData.expToNextLevel) { userData.level++; leveledUp = true; userData.currentExp -= userData.expToNextLevel; userData.expToNextLevel = Math.floor(userData.expToNextLevel * 1.2); } updateProfileDisplay(); saveUserData(); return { expGained: amount, leveledUp: leveledUp, newLevel: userData.level }; }
 
     // --- Обработчики событий и навигация ---
