@@ -114,18 +114,131 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('Регистрация ServiceWorker прошла успешно в области: ', registration.scope);
-                    })
-                    .catch(err => {
-                        console.log('Ошибка регистрации ServiceWorker: ', err);
-                    });
-            });
-        }
-    </script>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50"/>
+    <title>Фитнес-приложение</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+    <div id="main-screen" class="screen active">
+        <header>
+            <div class="profile-box">
+                <div class="profile-pic-container">
+                    <img src="https://via.placeholder.com/80" alt="Изображение профиля" id="profile-pic">
+                    <input type="file" id="profile-pic-upload" accept="image/*" style="display: none;">
+                    <button id="change-pic-btn" class="edit-btn"><i class="material-icons">edit</i></button>
+                </div>
+                <div class="profile-info">
+                    <div class="name-container">
+                        <h2 id="user-name">Имя пользователя</h2>
+                        <button id="edit-name-btn" class="edit-btn"><i class="material-icons">edit</i></button>
+                    </div>
+                    <input type="text" id="name-input-field" class="name-input" style="display: none;" maxlength="20">
+                    <p>Уровень: <span id="user-level">1</span></p>
+                    <div class="exp-bar-container">
+                        <div class="exp-bar" id="exp-bar"></div>
+                    </div>
+                    <p><span id="current-exp">0</span> / <span id="next-level-exp">100</span> ОПЫТА</p>
+                </div>
+            </div>
+        </header>
+        <main>
+            <button id="begin-training-btn" class="action-btn">Начать тренировку</button>
+        </main>
+        <footer>
+            <button id="exercise-guide-btn"><i class="material-icons">help_outline</i> Справка</button>
+            <button id="customization-btn"><i class="material-icons">settings</i> Настроить</button>
+        </footer>
+    </div>
+
+    <div id="exercise-guide-screen" class="screen">
+        <header>
+            <button id="close-guide-btn" class="back-btn"><i class="material-icons">arrow_back</i></button>
+            <h2>Справка по упражнениям</h2>
+        </header>
+        <div class="guide-content">
+            <!-- Упражнения будут добавлены сюда с помощью JavaScript -->
+        </div>
+    </div>
+
+    <div id="training-session-screen" class="screen">
+        <header class="training-header">
+            <button id="exit-session-btn" class="exit-btn"><i class="material-icons">close</i></button>
+            <div class="session-timer"><span id="session-type-display">Тренировка</span> Время: <span id="session-time-display">00:00</span></div>
+        </header>
+        <main class="training-main">
+            <div class="exercise-animation-container">
+                <img src="" alt="Анимация упражнения" id="current-exercise-animation">
+                <p id="current-exercise-name">Название упражнения</p>
+            </div>
+
+            <label for="current-exercise-progress-bar">Прогресс фазы:</label>
+            <div class="progress-bar-container current-exercise-progress-container">
+                <div id="current-exercise-progress-bar" class="progress-bar-fill"></div>
+            </div>
+
+            <div class="exercise-timer">Осталось времени: <span id="exercise-time-display">00</span>с</div>
+
+            <label for="total-session-progress-bar">Общий прогресс тренировки:</label>
+            <div class="progress-bar-container total-session-progress-container">
+                <div id="total-session-progress-bar" class="progress-bar-fill"></div>
+            </div>
+
+            <button id="pause-resume-btn" class="pause-btn"><i class="material-icons">pause</i></button>
+        </main>
+    </div>
+
+    <div id="customization-menu" class="modal">
+        <div class="modal-content">
+            <span class="close-modal-btn" id="close-customization-modal">×</span>
+            <h3>Варианты темы</h3>
+            <div class="theme-options">
+                <button class="theme-option" data-theme="default">Зеленая (по умолч.)</button>
+                <button class="theme-option" data-theme="dark">Темный режим</button>
+                <button class="theme-option" data-theme="light-blue">Светло-голубая</button>
+                <button class="theme-option" data-theme="indigo-delight">Восторг индиго</button>
+                <button class="theme-option" data-theme="teal-fresh">Бирюзовая свежесть</button>
+                <button class="theme-option" data-theme="deep-orange-energy">Насыщенно-оранжевая</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="session-summary-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="summary-title">Тренировка завершена!</h2>
+            <p id="summary-message">Отличная работа! Вы завершили тренировку!</p>
+            <p>Получено опыта: <span id="summary-exp-gained">0</span></p>
+            <button id="close-summary-modal-btn" class="action-btn">Отлично!</button>
+        </div>
+    </div>
+
+    <div id="warmup-prompt-modal" class="modal">
+        <div class="modal-content">
+            <h2>Первая тренировка за сегодня!</h2>
+            <p>Рекомендуем начать с короткой разминки, чтобы подготовить тело и избежать травм.</p>
+            <div class="modal-button-group">
+                <button id="start-warmup-btn" class="action-btn">Начать разминку</button>
+                <button id="skip-warmup-btn" class="action-btn secondary">Перейти к тренировке</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+  <script>
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/Diplom/sw.js',
+          {scope: '/Diplom/'}
+        )
+      }
+  </script>
+</body>
+</html>
 </body>
 </html>
